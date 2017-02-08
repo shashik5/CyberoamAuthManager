@@ -30,12 +30,12 @@ namespace SetupApplication.Code
         public string Arguments { get; set; }
 
         /// <summary>
-        /// State change type on which event will be triggered.
+        /// List of state change type triggers to be created for this task.
         /// </summary>
-        public List<TaskSessionStateChangeType> StateChangeType;
+        public List<TaskSessionStateChangeType> StateChangeTypes;
 
         /// <summary>
-        /// Set true to create logon trigger for the task.
+        /// Set true to create logon trigger for this task.
         /// </summary>
         public bool IsLogonTriggerRequired { get; set; } = false;
     }
@@ -162,7 +162,7 @@ namespace SetupApplication.Code
             {
                 TaskDefinition td = ts.NewTask();
                 td.RegistrationInfo.Description = task.Description;
-                foreach (TaskSessionStateChangeType stateChangeType in task.StateChangeType)
+                foreach (TaskSessionStateChangeType stateChangeType in task.StateChangeTypes)
                 {
                     td.Triggers.Add(new SessionStateChangeTrigger(stateChangeType) { UserId = SystemUserName, Enabled = true });
                 }
@@ -195,7 +195,7 @@ namespace SetupApplication.Code
                 {
                     Name = LoginTaskName,
                     Description = "Login to cyberoam account.",
-                    StateChangeType = new List<TaskSessionStateChangeType> {
+                    StateChangeTypes = new List<TaskSessionStateChangeType> {
                         TaskSessionStateChangeType.SessionUnlock,
                         TaskSessionStateChangeType.ConsoleConnect
                     },
@@ -207,7 +207,7 @@ namespace SetupApplication.Code
                 {
                     Name = LogoutTaskName,
                     Description = "Logout from cyberoam account.",
-                    StateChangeType = new List<TaskSessionStateChangeType> {
+                    StateChangeTypes = new List<TaskSessionStateChangeType> {
                         TaskSessionStateChangeType.SessionLock,
                         TaskSessionStateChangeType.ConsoleDisconnect
                     },
