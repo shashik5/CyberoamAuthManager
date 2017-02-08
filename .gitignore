@@ -250,3 +250,16 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/SetupApplication/SetupApplication.vshost.exe.manifest
+/SetupApplication/SetupApplication.vshost.exe.config
+/SetupApplication/SetupApplication.vshost.exe
+/SetupApplication/SetupApplication.exe.config
+/SetupApplication/SetupApplication.exe
+/SetupApplication/CryptManager.dll
+/SetupApplication/CyberoamAuthManagerSetup/SetupApplication.exe
+/SetupApplication/CyberoamAuthManagerSetup/Microsoft.Win32.TaskScheduler.dll
+/SetupApplication/CyberoamAuthManagerSetup/Data/info.ico
+/SetupApplication/CyberoamAuthManagerSetup/Data/dat.xml
+/SetupApplication/CyberoamAuthManagerSetup/Data/CyberoamAuthManager.exe
+/SetupApplication/CyberoamAuthManagerSetup/Data/CryptManager.dll
+/SetupApplication/CyberoamAuthManagerSetup/CryptManager.dll
