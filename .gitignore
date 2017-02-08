@@ -263,3 +263,6 @@ paket-files/
 /SetupApplication/CyberoamAuthManagerSetup/Data/CyberoamAuthManager.exe
 /SetupApplication/CyberoamAuthManagerSetup/Data/CryptManager.dll
 /SetupApplication/CyberoamAuthManagerSetup/CryptManager.dll
+/SetupApplication/Data/CryptManager.dll
+/SetupApplication/Data/CyberoamAuthManager.exe
+/SetupApplication/Data/dat.xml
