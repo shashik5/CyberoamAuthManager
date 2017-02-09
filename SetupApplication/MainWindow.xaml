@@ -24,9 +24,9 @@
         <TextBlock Grid.Row = "1" Grid.Column = "0" Text = "Password:" FontSize="12" 
          HorizontalAlignment = "Right" VerticalAlignment = "Center" />
         <PasswordBox x:Name="PasswordTxt" Grid.Row = "1" Grid.Column = "1" Margin = "10" FontSize="12" Height="25" Padding="2"/>
-        <Button x:Name="Install" Content="Install" Grid.Row="2" Grid.Column="1" Width="80" Height="25" FontSize="12" Background="DarkSlateGray" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Click="Install_Click" Visibility="Visible"></Button>
-        <Button x:Name="Modify" Content="Modify" Grid.Row="2" Grid.Column="1" Width="80" Height="25" FontSize="12" Background="DarkSlateGray" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,100,10" Click="Modify_Click" Visibility="Hidden"></Button>
-        <Button x:Name="Remove" Content="Remove" Grid.Row="2" Grid.Column="1" Width="80" Height="25" FontSize="12" Background="DarkSlateGray" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Click="Remove_Click" Visibility="Hidden"></Button>
+        <Button x:Name="Install" Content="Install" Grid.Row="2" Grid.Column="1" Width="80" Height="25" FontSize="12" Background="DarkSlateGray" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,-25" Click="Install_Click" Visibility="Visible"></Button>
+        <Button x:Name="Modify" Content="Modify" Grid.Row="2" Grid.Column="1" Width="80" Height="25" FontSize="12" Background="DarkSlateGray" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,110,-25" Click="Modify_Click" Visibility="Hidden"></Button>
+        <Button x:Name="Remove" Content="Remove" Grid.Row="2" Grid.Column="1" Width="80" Height="25" FontSize="12" Background="DarkSlateGray" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,-25" Click="Remove_Click" Visibility="Hidden"></Button>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,-55,0,0" FontSize="15" Text="Enter Cyberoam Credentials." Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top"/>
     </Grid>
 
