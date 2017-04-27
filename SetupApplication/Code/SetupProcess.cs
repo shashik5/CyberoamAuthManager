@@ -180,8 +180,9 @@ namespace SetupApplication.Code
         /// </summary>
         /// <param name="userName">Cyberoam user name.</param>
         /// <param name="password">Cyberoam password.</param>
+        /// <param name="disableLogoff">Bool value to disable auto logoff.</param>
         /// <returns></returns>
-        public static bool Setup(string userName, string password)
+        public static bool Setup(string userName, string password, bool disableLogoff)
         {
             try
             {
@@ -203,16 +204,19 @@ namespace SetupApplication.Code
                     Arguments = "login"
                 });
 
-                ScheduleTask(new Task
+                if (!disableLogoff)
                 {
-                    Name = LogoutTaskName,
-                    Description = "Logout from cyberoam account.",
-                    StateChangeTypes = new List<TaskSessionStateChangeType> {
+                    ScheduleTask(new Task
+                    {
+                        Name = LogoutTaskName,
+                        Description = "Logout from cyberoam account.",
+                        StateChangeTypes = new List<TaskSessionStateChangeType> {
                         TaskSessionStateChangeType.SessionLock,
                         TaskSessionStateChangeType.ConsoleDisconnect
                     },
-                    Arguments = "logout"
-                });
+                        Arguments = "logout"
+                    }); 
+                }
 
                 return true;
             }

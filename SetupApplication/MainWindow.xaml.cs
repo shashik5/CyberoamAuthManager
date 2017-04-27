@@ -23,7 +23,7 @@ namespace SetupApplication
 
         private void BeginSetup()
         {
-            if (SetupProcess.Setup(UserNameTxt.Text, PasswordTxt.Password))
+            if (SetupProcess.Setup(UserNameTxt.Text, PasswordTxt.Password, (bool)DisableAutoLogoffControl.IsChecked))
             {
                 MessageBox.Show("Application successfully installed.");
             }
@@ -70,7 +70,8 @@ namespace SetupApplication
         {
             try
             {
-                if (SetupProcess.RollBack()) {
+                if (SetupProcess.RollBack())
+                {
                     MessageBox.Show("Application successfully removed.");
                 }
                 else
