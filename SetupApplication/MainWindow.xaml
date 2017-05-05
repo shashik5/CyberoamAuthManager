@@ -28,8 +28,8 @@
         <Button x:Name="Modify" Content="Modify" Grid.Row="2" Grid.Column="1" Width="80" Height="25" FontSize="12" Background="DarkSlateGray" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,110,-25" Click="Modify_Click" Visibility="Hidden"></Button>
         <Button x:Name="Remove" Content="Remove" Grid.Row="2" Grid.Column="1" Width="80" Height="25" FontSize="12" Background="DarkSlateGray" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,-25" Click="Remove_Click" Visibility="Hidden"></Button>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,-55,0,0" FontSize="15" Text="Enter Cyberoam Credentials." Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="DisableAutoLogoffTxt" Text="disable auto logoff" Grid.Row="2" Grid.Column="1" Margin="34,0,0,0"></TextBlock>
-        <CheckBox x:Name="DisableAutoLogoffControl" Grid.Row="2" Grid.Column="1" Margin="12,0,0,0" IsChecked="False"></CheckBox>
+        <TextBlock x:Name="EnableAutoLogoffTxt" Text="enable auto logoff" Grid.Row="2" Grid.Column="1" Margin="34,0,0,0"></TextBlock>
+        <CheckBox x:Name="EnableAutoLogoffControl" Grid.Row="2" Grid.Column="1" Margin="12,0,0,0" IsChecked="False"></CheckBox>
     </Grid>
 
 </Window>

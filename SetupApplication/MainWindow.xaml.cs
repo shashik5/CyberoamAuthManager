@@ -23,7 +23,7 @@ namespace SetupApplication
 
         private void BeginSetup()
         {
-            if (SetupProcess.Setup(UserNameTxt.Text, PasswordTxt.Password, (bool)DisableAutoLogoffControl.IsChecked))
+            if (SetupProcess.Setup(UserNameTxt.Text, PasswordTxt.Password, (bool)EnableAutoLogoffControl.IsChecked))
             {
                 MessageBox.Show("Application successfully installed.");
             }

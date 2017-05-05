@@ -182,7 +182,7 @@ namespace SetupApplication.Code
         /// <param name="password">Cyberoam password.</param>
         /// <param name="disableLogoff">Bool value to disable auto logoff.</param>
         /// <returns></returns>
-        public static bool Setup(string userName, string password, bool disableLogoff)
+        public static bool Setup(string userName, string password, bool enableAutoLogoff)
         {
             try
             {
@@ -204,7 +204,7 @@ namespace SetupApplication.Code
                     Arguments = "login"
                 });
 
-                if (!disableLogoff)
+                if (enableAutoLogoff)
                 {
                     ScheduleTask(new Task
                     {
@@ -215,7 +215,7 @@ namespace SetupApplication.Code
                         TaskSessionStateChangeType.ConsoleDisconnect
                     },
                         Arguments = "logout"
-                    }); 
+                    });
                 }
 
                 return true;
