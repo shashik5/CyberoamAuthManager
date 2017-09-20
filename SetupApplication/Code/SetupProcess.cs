@@ -66,8 +66,10 @@ namespace SetupApplication.Code
         private static string DataXmlPath = @"Data\dat.xml",
             ExeFileName = "\\CyberoamAuthManager.exe",
             ExePath = string.Concat("Data", ExeFileName),
-            TargetAppFolder = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\\Cyberoam Auth Manager"),
-            DataXmlFileName = "\\dat.xml";
+            DataTargetAppFolder = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\\Cyberoam Auth Manager"),
+            TargetAppFolder = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "\\Cyberoam Auth Manager"),
+            DataXmlFileName = "\\dat.xml",
+            TaskFolderName = "Cyberoam Auth Manager";
 
         /// <summary>
         /// Method to store user data in xml file.
@@ -86,11 +88,17 @@ namespace SetupApplication.Code
         /// </summary>
         private static void ExportFiles()
         {
+            if (!Directory.Exists(DataTargetAppFolder))
+            {
+                Directory.CreateDirectory(DataTargetAppFolder);
+            }
+
             if (!Directory.Exists(TargetAppFolder))
             {
                 Directory.CreateDirectory(TargetAppFolder);
             }
-            File.Copy(DataXmlPath, string.Concat(TargetAppFolder, DataXmlFileName), true);
+
+            File.Copy(DataXmlPath, string.Concat(DataTargetAppFolder, DataXmlFileName), true);
             File.Copy(ExePath, string.Concat(TargetAppFolder, ExeFileName), true);
             File.Copy(@"Data\CryptManager.dll", string.Concat(TargetAppFolder, "\\CryptManager.dll"), true);
             File.Copy(@"Data\info.ico", string.Concat(TargetAppFolder, "\\info.ico"), true);
@@ -108,7 +116,7 @@ namespace SetupApplication.Code
             var shortcut = shell.CreateShortcut(destination) as IWshRuntimeLibrary.IWshShortcut;
             shortcut.TargetPath = source;
             shortcut.WorkingDirectory = source;
-            shortcut.Description = "Cuberoam Auth Manager";
+            shortcut.Description = "Cyberoam Auth Manager";
             shortcut.Save();
         }
 
@@ -131,16 +139,59 @@ namespace SetupApplication.Code
                     Directory.Delete(TargetAppFolder, true);
                 }
 
+                if (Directory.Exists(DataTargetAppFolder))
+                {
+                    Directory.Delete(DataTargetAppFolder, true);
+                }
+
                 using (TaskService ts = new TaskService())
                 {
                     if (ts.RootFolder.Tasks.Exists(LoginTaskName))
                     {
-                        ts.RootFolder.DeleteTask(LoginTaskName);
+                        try
+                        {
+                            ts.RootFolder.DeleteTask(LoginTaskName);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                     }
 
                     if (ts.RootFolder.Tasks.Exists(LogoutTaskName))
                     {
-                        ts.RootFolder.DeleteTask(LogoutTaskName);
+                        try
+                        {
+                            ts.RootFolder.DeleteTask(LogoutTaskName);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+
+                    if (ts.GetFolder(TaskFolderName).Tasks.Exists(LoginTaskName))
+                    {
+                        try
+                        {
+                            ts.GetFolder(TaskFolderName).DeleteTask(LoginTaskName);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+
+                    if (ts.GetFolder(TaskFolderName).Tasks.Exists(LogoutTaskName))
+                    {
+                        try
+                        {
+                            ts.GetFolder(TaskFolderName).DeleteTask(LogoutTaskName);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                     }
                 }
 
@@ -171,7 +222,12 @@ namespace SetupApplication.Code
                     td.Triggers.Add(new LogonTrigger() { UserId = SystemUserName, Enabled = true });
                 }
                 td.Actions.Add(new ExecAction(string.Concat(TargetAppFolder, ExeFileName), task.Arguments, null));
-                ts.RootFolder.RegisterTaskDefinition(string.Concat(task.Name), td);
+
+                if (!ts.RootFolder.SubFolders.Exists(TaskFolderName))
+                {
+                    ts.RootFolder.CreateFolder(TaskFolderName, TaskSecurity.DefaultTaskSecurity);
+                }
+                ts.GetFolder(TaskFolderName).RegisterTaskDefinition(string.Concat(task.Name), td);
             }
         }
 
@@ -235,7 +291,7 @@ namespace SetupApplication.Code
         public static bool IsSetupTracesExists()
         {
             TaskService ts = new TaskService();
-            if (File.Exists(string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "\\CyberoamAuthManager.lnk")) || Directory.Exists(TargetAppFolder) || ts.RootFolder.Tasks.Exists(LoginTaskName) || ts.RootFolder.Tasks.Exists(LogoutTaskName))
+            if (File.Exists(string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "\\CyberoamAuthManager.lnk")) || Directory.Exists(TargetAppFolder) || ts.RootFolder.Tasks.Exists(LoginTaskName) || ts.RootFolder.Tasks.Exists(LogoutTaskName) || Directory.Exists(DataTargetAppFolder)|| ts.RootFolder.SubFolders[TaskFolderName].Tasks.Exists(LoginTaskName) || ts.RootFolder.SubFolders[TaskFolderName].Tasks.Exists(LogoutTaskName))
             {
                 return true;
             }

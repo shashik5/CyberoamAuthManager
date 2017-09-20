@@ -5,23 +5,32 @@
         static void Main(string[] args)
         {
             User user = UserDetails.GetUser(args.Length > 1 ? args[1] : string.Empty);
-            if (args.Length > 0)
+
+            if (!string.IsNullOrEmpty(user.Username))
             {
-                var operation = args[0];
-                switch (operation)
+                if (args.Length > 0)
                 {
-                    case "login":
-                        AuthManager.Login(user.Username, user.Password);
-                        break;
-                    case "logout":
-                        AuthManager.Logout(user.Username);
-                        break;
+                    var operation = args[0];
+                    switch (operation.ToLower())
+                    {
+                        case "login":
+                            AuthManager.Login(user.Username, user.Password);
+                            break;
+                        case "logout":
+                            AuthManager.Logout(user.Username);
+                            break;
+                    }
+                }
+                else
+                {
+                    AuthManager.Login(user.Username, user.Password);
                 }
             }
             else
             {
-                AuthManager.Login(user.Username, user.Password);
+                AuthManager.ShowNotification("User details not configured.");
             }
+            
         }
     }
 }

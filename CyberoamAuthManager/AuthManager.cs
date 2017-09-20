@@ -111,15 +111,21 @@ namespace CyberoamAuthManager
         /// <param name="response">Response string.</param>
         private static void ParseResponse(string response)
         {
-            string logo = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\\Cyberoam Auth Manager\\info.ico");
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(response);
             var messageNode = xml.SelectSingleNode("/requestresponse/message");
+
+            ShowNotification(messageNode.InnerText);
+        }
+
+        internal static void ShowNotification(string message)
+        {
+            string logo = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "\\Cyberoam Auth Manager\\info.ico");
             string toastXml = $@"<toast>
                     <visual>
                         <binding template='ToastGeneric'>
                             <text>Cyberoam Auth Manager</text>
-                            <text>{messageNode.InnerText}</text>
+                            <text>{message}</text>
                             <image src='{logo}' placement='appLogoOverride' hint-crop='circle'/>
                         </binding>
                     </visual>

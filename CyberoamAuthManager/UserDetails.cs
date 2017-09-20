@@ -33,14 +33,18 @@ namespace CyberoamAuthManager
 
             try
             {
-                xmlContent = File.ReadAllText(mode == "debug" ? ConfigurationManager.AppSettings["DataPathStandalone"] : string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\\Cyberoam Auth Manager\\dat.xml"));
+                xmlContent = File.ReadAllText(string.Equals(mode, "debug", StringComparison.OrdinalIgnoreCase) ? ConfigurationManager.AppSettings["DataPathStandalone"] : string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "\\Cyberoam Auth Manager\\dat.xml"));
                 xml = new XmlDocument();
                 xml.LoadXml(xmlContent);
                 userString = Crypto.Decode(xml.SelectSingleNode("/CyberoamAuthManager/Auth").InnerText);
             }
             catch (Exception)
             {
-                userString = "u;p";
+                return new User
+                {
+                    Username = null,
+                    Password = null
+                };
             }
 
             userData = userString.Split(';');
