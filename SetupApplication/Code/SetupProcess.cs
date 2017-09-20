@@ -170,23 +170,36 @@ namespace SetupApplication.Code
                         }
                     }
 
-                    if (ts.GetFolder(TaskFolderName).Tasks.Exists(LoginTaskName))
+                    if (ts.RootFolder.SubFolders.Exists(TaskFolderName))
                     {
+                        TaskFolder taskFolder = ts.GetFolder(TaskFolderName);
+                        if (taskFolder.Tasks.Exists(LoginTaskName))
+                        {
+                            try
+                            {
+                                taskFolder.DeleteTask(LoginTaskName);
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+
+                        if (taskFolder.Tasks.Exists(LogoutTaskName))
+                        {
+                            try
+                            {
+                                taskFolder.DeleteTask(LogoutTaskName);
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+
                         try
                         {
-                            ts.GetFolder(TaskFolderName).DeleteTask(LoginTaskName);
-                        }
-                        catch (Exception)
-                        {
-
-                        }
-                    }
-
-                    if (ts.GetFolder(TaskFolderName).Tasks.Exists(LogoutTaskName))
-                    {
-                        try
-                        {
-                            ts.GetFolder(TaskFolderName).DeleteTask(LogoutTaskName);
+                            ts.RootFolder.SubFolders.Remove(taskFolder);
                         }
                         catch (Exception)
                         {
@@ -238,7 +251,7 @@ namespace SetupApplication.Code
         /// <param name="password">Cyberoam password.</param>
         /// <param name="disableLogoff">Bool value to disable auto logoff.</param>
         /// <returns></returns>
-        public static bool Setup(string userName, string password, bool enableAutoLogoff)
+        public static bool Setup(string userName, string password, bool enableAutoLogoff = false)
         {
             try
             {
@@ -291,7 +304,7 @@ namespace SetupApplication.Code
         public static bool IsSetupTracesExists()
         {
             TaskService ts = new TaskService();
-            if (File.Exists(string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "\\CyberoamAuthManager.lnk")) || Directory.Exists(TargetAppFolder) || ts.RootFolder.Tasks.Exists(LoginTaskName) || ts.RootFolder.Tasks.Exists(LogoutTaskName) || Directory.Exists(DataTargetAppFolder)|| ts.RootFolder.SubFolders[TaskFolderName].Tasks.Exists(LoginTaskName) || ts.RootFolder.SubFolders[TaskFolderName].Tasks.Exists(LogoutTaskName))
+            if (File.Exists(string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "\\CyberoamAuthManager.lnk")) || Directory.Exists(TargetAppFolder) || ts.RootFolder.Tasks.Exists(LoginTaskName) || ts.RootFolder.Tasks.Exists(LogoutTaskName) || Directory.Exists(DataTargetAppFolder) || ts.RootFolder.SubFolders[TaskFolderName].Tasks.Exists(LoginTaskName) || ts.RootFolder.SubFolders[TaskFolderName].Tasks.Exists(LogoutTaskName))
             {
                 return true;
             }
